@@ -22,5 +22,6 @@ Medium-difficulty to change:
   - Same with form-elements
 
 Hard-mode:
-- Something clever for the component-classes use that we'll probably explore later, I really dig what Benja mentioned with having these get instanced and then we can just bash defaults with input from userland. But regardless this would almost definitely be major-breaking for the components.
-- Would we provide/inject the component-classes then instead of having them be imports? That way the components could take in this instanced set of classes?
+- Changing anything (that doesn't inherit from the 'easy' changes) in the React/Vue/Web components would be quite difficult, since they use TW classes
+  - Something clever for the component-classes use that we'll probably explore later, I really dig what Benja mentioned with having these get instanced and then we can just bash defaults with input from userland. But regardless this would almost definitely be major-breaking for the components.
+  - Would we provide/inject the component-classes then instead of having them be imports? That way the components could take in this instanced set of classes?
