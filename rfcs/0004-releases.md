@@ -35,6 +35,11 @@ To solve this we should develop against a `next` branch that is constantly publi
 Anyone needing a feature we have only just completed can install the `next` version while waiting for the next release window.
 Cutting an actual release then would simply be a matter of merging `next` into `main` and writing an upgrade guide.
 
+
+### Backport bugfixes and urgent features
+
+Anything that must go out on the main channel can as agreed upon by the team. To do so, we can cherry pick commits from next to main. Changelogs and slack notifications will go out and might include an explanation as to why we felt it was important enough to not wait for the next release cycle. Upgrade guides would typically not be required since such changes will likely not include new features or breaking changes. If for some reason they do, an upgrade guide would be necessary.
+
 ## Implementation
 
 The following steps would need to be taken to implement this from a technical perspective would look roughly something like this:
