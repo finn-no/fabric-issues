@@ -57,9 +57,12 @@ The following steps would need to be taken to implement this from a technical pe
   * Add link to update guide in release tag on GH
   * Release triggers a slack webhook to notify that a new release is ready with link to update guide
 
+## Schedule
+* Tradeoffs exist around releases. Too long of a period between releases can potentially cause friction for teams who need new features quickly and are forced to termporarily use the next branch. On the other hand, too short and we increase "update noise" for teams. Additionally, less frequent releases introduce more risk when updating the Eik aliases.
+* A weekly schedule allows for a quick enough turn around such that most teams would not need to use the next branch (up to a week wait at most) while preventing ongoing development noise and allowing for clean communication of new releases. Eg. "New releases of Fabric every Monday at 10am"
+
 ## Other thoughts/questions
 
-* How often should full releases happen? (I somewhat arbitrarily propose once per month. Eg. 3th Thursday of the month)
 * Where should we document whatever we decide? Perhaps a page on the docs site?
 * It might be nice to have a `next` version of the docs sites published as well (though probably not strictly necessary)
 * Maybe using a squash and merge approach (at least from next -> main) would create a cleaner git record for people?
@@ -87,4 +90,5 @@ graph TD;
     C{Official Release}-->|Publish|D(NPM);
     C{Official Release}-->|Publish|E(Eik);
     C{Official Release}-->|Triggers|F(Slack Web Hook);
+    E(Eik)-->|1 Week Later|G(Eik Alias Update);
 ```
