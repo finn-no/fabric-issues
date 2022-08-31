@@ -9,14 +9,13 @@ This RFC proposes a way to formalise and structure our releases in a way that ai
 
 ## Proposed Concepts/Principles
 
-### Fixed, regular release dates
+### Release when ready
 
-The most important idea here is to release on a fixed schedule. This might perhaps be once per month. 
-This will make it easy for teams to schedule maintenance and update work around the schedule and at the same time turn down renovate noise.
+Release features, bug fixes and dependency updates as necessary but in a thoughtful way. We want to avoid constant update noise (for example from renovate bot) while also avoiding blocking teams for getting changes when they need them.
 
 ### Good documentation and upgrade guides
 
-Releases should come with changelogs and upgrade guides. Always. It should be easy for teams to follow our guides to minimize upgrade friction.
+Releases should come with changelogs and upgrade guides (as necessary). It should be easy for teams to follow our guides to minimize upgrade friction.
 Particularly important when there are breaking changes.
 
 ### Good communication around releases
@@ -30,15 +29,13 @@ lives easier while working of course but is especially important to ensure our r
 
 ### "Next" releases for ongoing work
 
-We can't allow a fixed release cycle to block us from getting immediate work into the hands of those who can't wait weeks for the next release.
-To solve this we should develop against a `next` branch that is constantly published to NPM and Eik using a `next` tag. (eg. `1.0.0-next.1`)
-Anyone needing a feature we have only just completed can install the `next` version while waiting for the next release window.
-Cutting an actual release then would simply be a matter of merging `next` into `main` and writing an upgrade guide.
+We will develop against a `next` branch that is constantly published to NPM and Eik using a `next` tag. (eg. `1.0.0-next.1`)
+Testing of upcoming releases can be done internally by the team by installing the `next` version. Renovate bot updates will be made against next as well to avoid constant updates to main/master.
+Cutting an actual release then will be a matter of merging `next` into `main` and writing an upgrade guide if necessary.
 
+## Eik
 
-### Backport bugfixes and urgent features
-
-Urgent work such as security or bug fixes can, as agreed upon by the team, go out on the main channel. To do so, we can cherry pick commits from next to main. Changelogs and slack notifications will go out and might include an explanation as to why we felt it was important enough to not wait for the next release cycle. Upgrade guides would typically not be required since such changes will likely not include new features or breaking changes. If for some reason they do, an upgrade guide would be necessary.
+Fabric libraries are available on Eik and are aliased. Aliasing gives us the ability to update everyone at the same time and keep teams on the same version across the Finn site. To help ensure that a new release isn't going to break everyones pages, we plan to update Eik aliases for new releases some days after the release itself. Current thought is that about 1 week later should be about right but we may adjust this. It might be that a day or 2 is enough, just enough to ensure that if there needs to be release fixups performed, we don't roll out the alias update until after.
 
 ## Implementation
 
@@ -49,23 +46,13 @@ The following steps would need to be taken to implement this from a technical pe
 3. Add commitizen to ensure conventional commits are used
 4. Setup semantic release to auto publish anything merged to next with a `next` tag.
 5. Setup semantic release to auto publish from main/master including auto generated release notes
-6. Setup a reminder for us when a new release should be cut
-7. When doing a release:
-  * Write update guide (from previous version only)
+6. When doing a release:
+  * Write update guide if necessary (from previous version only)
   * Merge master/main
   * Auto publish to NPM and Eik happens
   * Add link to update guide in release tag on GH
   * Release triggers a slack webhook to notify that a new release is ready with link to update guide
-
-## Schedule
-* Tradeoffs exist around releases. Too long of a period between releases can potentially cause friction for teams who need new features quickly and are forced to termporarily use the next branch. On the other hand, too short and we increase "update noise" for teams. Additionally, less frequent releases introduce more risk when updating the Eik aliases.
-* A weekly schedule allows for a quick enough turn around such that most teams would not need to use the next branch (up to a week wait at most) while preventing ongoing development noise and allowing for clean communication of new releases. Eg. "New releases of Fabric every Monday at 10am"
-
-## Other thoughts/questions
-
-* Where should we document whatever we decide? Perhaps a page on the docs site?
-* It might be nice to have a `next` version of the docs sites published as well (though probably not strictly necessary)
-* Maybe using a squash and merge approach (at least from next -> main) would create a cleaner git record for people?
+7. Some time after a release has been cut, update the Eik alias.
 
 ## Diagrams
 
